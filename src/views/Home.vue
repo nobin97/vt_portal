@@ -12,7 +12,7 @@ import dashboard from "@/components/dashboard.vue";
 
 
 export default {
-  name: 'navbar',
+  name: 'home',
   components: {
     navbar,
     dashboard
