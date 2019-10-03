@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import About from "./views/About.vue";
 import ShareEverything from "./views/ShareEverything.vue";
+// import GLogin from "./views/GLogin.vue";
 
 Vue.use(Router);
 
@@ -10,8 +11,13 @@ export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
+    // {
+    //   path: "/",
+    //   name: "login",
+    //   component: GLogin
+    // },
     {
-      path: "/",
+      path: "/home",
       name: "home",
       component: Home
     },

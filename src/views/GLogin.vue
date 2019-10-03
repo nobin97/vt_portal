@@ -1,6 +1,5 @@
 <template>
-  <div style="float:right;" id="google-signin-button">
-    <p>hello</p>
+  <div id="google-signin-button">
   </div>
 </template>
 
@@ -9,7 +8,6 @@ export default {
   name: "GLogin",
   data() {
     return {
-      signedIn: false,
       data: {
         id: "", 
         full_name: "",
