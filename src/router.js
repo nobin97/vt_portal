@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import About from "./views/About.vue";
-import blog from "./views/blog.vue";
+import ShareEverything from "./views/ShareEverything.vue";
 
 Vue.use(Router);
 
@@ -22,8 +22,8 @@ export default new Router({
     },
     {
       path: "/share_everything",
-      name: "blog",
-      component: blog
+      name: "share_everything",
+      component: ShareEverything
     }
   ]
 });

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="sticky-top">
     <div>
       <header>
         <!-- A grey horizontal navbar that becomes vertical on small screens -->
@@ -7,17 +7,14 @@
           <!-- Links -->
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="#">Link 1</a>
+              <a class="nav-link" href="#">nobin97</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link 2</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link 3</a>
+              <a class="nav-link" href="#">Sign Out</a>
             </li>
           </ul>
         </nav>
       </header>
     </div>
   </div>
-</template>   
+</template>

@@ -1,22 +1,13 @@
 <template>
   <div class="home">
-    <navbar></navbar>
-    <dashboard></dashboard>
+    <div class="heading">
+      <h1>VT-Portal</h1>
+    </div>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import navbar from "@/components/navbar.vue";
-import dashboard from "@/components/dashboard.vue";
-
-
-export default {
-  name: 'home',
-  components: {
-    navbar,
-    dashboard
-     
+<style scoped>
+  .heading {
+    text-align: center;
   }
-};
-</script>
+</style>
