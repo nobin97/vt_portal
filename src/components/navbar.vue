@@ -1,6 +1,7 @@
 <template>
-  <div style="float:right;" id="google-signin-button">
-    <p>hello</p>
+  <div class="login" >
+    <div v-if="signedIn===false" style="float:right;" id="google-signin-button"></div>
+    <div v-else>Sign out</div>
   </div>
 </template>
 
@@ -36,6 +37,7 @@ export default {
       this.data.image_url = profile.getImageUrl();
       this.data.email = profile.getEmail();
       this.data.access_token = user.getAuthResponse().access_token;
+      this.signedIn = true;
       this.sendToBackend();
     },
     sendToBackend: function() {
@@ -52,3 +54,9 @@ export default {
   }
 }
 </script>
+
+<style>
+  .login {
+    float: right;
+  }
+</style>
