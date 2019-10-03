@@ -2,7 +2,7 @@
   <div>
     <navbar/>
     <div id="nav">
-      <router-link to="/home">Home</router-link> |
+      <router-link to="/">Home</router-link> |
       <router-link to="/share_everything">Share Everything</router-link> |
       <router-link to="/about">About</router-link>
     </div>

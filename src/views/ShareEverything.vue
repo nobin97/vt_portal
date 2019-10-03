@@ -52,15 +52,15 @@
           <div class="col-lg-10">
             <h1 class="">Share Everything</h1>
           </div>
-          <div class="col">
+          <div class="col" v-if="load_error===false">
             <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Share</button>
           </div>
         </div>
       </div>
 
-      <div class="leaderboard ml-1 mr-3" id="leaderboard" style="float:right; width:23%;">
+      <div class="leaderboard ml-1 mr-3" id="leaderboard" v-if="load_error===false" style="float:right; width:23%;">
         <div class="card">
-          <h3 class="ml-2 mt-1">LeaderBoard</h3>
+          <h3 class="ml-2">LeaderBoard</h3>
           <div class="card mt-1 ml-3 mr-3 mb-3" v-bind:key="item.id" v-for="(item, index) in leaderboard.data">
             <div class="card-body">
               <div class="row">
@@ -68,7 +68,7 @@
                   <h2>{{ index+1 }}</h2>
                 </div>
                 <div class="col-md-6">
-                  <img :src="item.user.image_url" :alt="item.user.username" height=40 width="40" style="border-radius:50%;">
+                  <img :src="item.user.image_url" :alt="item.user.username" height="40" width="40" style="border-radius:50%;">
                   {{ item.user.username }}
                 </div>
                 <div class="col">
@@ -95,7 +95,7 @@
         </div>
         <div class="loading" v-if="blogs.data===[]">0 Results Found. Come back later..</div>
         <div class="loading" v-if="loading===true">Hang on. We are Loading results...</div>
-        <div class="loading" v-else-if="load_error===true">We are having trouble loading results at the moment. Try again later...</div>
+        <div class="loading" v-else-if="load_error===true"><strong>We are having trouble loading results at the moment. Make sure you are signed in...</strong></div>
       </div>
     </div>
 </template>
@@ -119,7 +119,7 @@ export default {
       load_error: false,
       leaderboard: [],
       blog_by_id: [],
-      token: 'Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiM2VmZjE2OGQtZjZlNS00NTg3LWE1ZmItMGJiOGM4YWY4NGJlIiwidXNlcm5hbWUiOiJub2JpbmpAcWJ1cnN0LmNvbSIsImV4cCI6MTU3MDExNDY4MCwiZW1haWwiOiJub2JpbmpAcWJ1cnN0LmNvbSJ9.t-_yIDMo_8nnSiqnPR41OrfeIbV9RjbQ1o4bi1ISEkU',
+      token: "Token " + localStorage.getItem("jwt"),
       newBlog: {'title': null, 'text': null}
     };
   },
