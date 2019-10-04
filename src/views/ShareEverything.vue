@@ -1,103 +1,137 @@
 <template>
-  <div class="mainapp" id="main-app">
-    <navbar/>
-      <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Let's Share...</h4>
-            </div>
-            <form v-on:submit.prevent="post_blog">
-                <div class="modal-body">
-                    <div class="form-group">
-                      <label for="blogTitle">Title</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="blogTitle"
-                        placeholder="Enter Title"
-                        v-model="newBlog.title"
-                        required="required">
-                    </div>
-                    <div class="form-group">
-                      <label for="blogText">Text</label>
-                      <textarea
-                        class="form-control"
-                        id="blogText"
-                        placeholder="Enter Text"
-                        v-model="newBlog.text"
-                        required="required"
-                        rows="10"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary">Post</button>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-                </form>
-            <!-- <div class="modal-body">
-              <p>Some text in the modal.</p>
-            </div> -->
-            <!-- <div class="modal-footer">
-              <button type="button" class="btn btn-primary" data-dismiss="modal" style="">Close</button>
-            </div> -->
+  <div class="mainapp flexBox" id="main-app">
+    <navbar />
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Let's Share...</h4>
           </div>
-
-        </div>
-      </div>
-      <div class="page-header ml-3 mt-3 mb-5 sticky-top" style="background-color:white;">
-        <div class="row">
-          <div class="col-lg-10">
-            <h1 class="">Share Everything</h1>
-          </div>
-          <div class="col" v-if="load_error===false">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Share</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="leaderboard ml-1 mr-3" id="leaderboard" v-if="load_error===false" style="float:right; width:23%;">
-        <div class="card">
-          <h3 class="ml-2">LeaderBoard</h3>
-          <div class="card mt-1 ml-3 mr-3 mb-3" v-bind:key="item.id" v-for="(item, index) in leaderboard.data">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-md-2">
-                  <h2>{{ index+1 }}</h2>
-                </div>
-                <div class="col-md-6">
-                  <img :src="item.user.image_url" :alt="item.user.username" height="40" width="40" style="border-radius:50%;">
-                  {{ item.user.username }}
-                </div>
-                <div class="col">
-                  {{ item.score }}
-                </div>
+          <form v-on:submit.prevent="post_blog">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="blogTitle">Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="blogTitle"
+                  placeholder="Enter Title"
+                  v-model="newBlog.title"
+                  required="required"
+                />
+              </div>
+              <div class="form-group">
+                <label for="blogText">Text</label>
+                <textarea
+                  class="form-control"
+                  id="blogText"
+                  placeholder="Enter Text"
+                  v-model="newBlog.text"
+                  required="required"
+                  rows="10"
+                ></textarea>
               </div>
             </div>
-          </div>
-          <div class="loading" v-if="lboard_loading===true">Hang on. We are Loading results...</div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Post</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </form>
         </div>
       </div>
-      <div class="container ml-5" id='main' style="max-width:70%;">
-        <div class="card mb-3" v-bind:key="blog.id" v-for="blog in blogs.data" >
+    </div>
+    <div class="page-header ml-3 mt-3 mb-5 sticky-top" style="background-color:white;">
+      <div class="row">
+        <div class="col-lg-10">
+          <h1 class>Share Everything</h1>
+        </div>
+        <div class="col" v-if="load_error===false">
+          <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Share</button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="leaderboard mr-2"
+      id="leaderboard"
+      v-if="load_error===false"
+      style="float:right; width:23%;"
+    >
+      <div class="card">
+        <h3 class="ml-2">LeaderBoard</h3>
+        <div
+          class="card mt-1 ml-2 mr-2 mb-2"
+          v-bind:key="item.id"
+          v-for="(item, index) in leaderboard.data"
+        >
           <div class="card-body">
-            <h2 class="card-title">{{ blog.title }}</h2>
-            <small>{{ blog.created_at }} <img :src="blog.author.image_url" :alt="blog.author.username" height=25 width="25" style="border-radius:50%;">
-           {{ blog.author.username }} ({{ blog.author.first_name }} {{ blog.author.last_name }}) </small>
-            <p class="card-text mt-2">{{ blog.text }}</p>
-            <hr>
-            <div class="">
-              <button class="btn btn-link" @click="up_vote(blog.id)"><img v-if="blog.is_upvoted" src="@/assets/claps.png" alt="Claps" height="30" width="30"><img v-if="blog.is_upvoted===false" src="@/assets/not_clap.png" alt="Claps" height="40" width="40"></button>  {{ blog.upvote_count }}
+            <div class="row">
+              <div class="col-md-2">
+                <h2>{{ index+1 }}</h2>
+              </div>
+              <div class="col-md-6">
+                <img
+                  :src="item.user.image_url"
+                  :alt="item.user.username"
+                  height="35"
+                  width="35"
+                  style="border-radius:50%;"
+                />
+                &nbsp;{{ item.user.username }}
+              </div>
+              <div class="col">{{ item.score }}</div>
             </div>
           </div>
         </div>
-        <div class="loading" v-if="blogs.data===[]">0 Results Found. Come back later..</div>
-        <div class="loading" v-if="loading===true">Hang on. We are Loading results...</div>
-        <div class="loading" v-else-if="load_error===true"><strong>We are having trouble loading results at the moment. Make sure you are signed in...</strong></div>
+        <div class="loading" v-if="lboard_loading===true">Hang on. We are Loading results...</div>
       </div>
     </div>
+    <div class="container ml-5" id="main" style="max-width:70%;">
+      <div class="card mb-3" v-bind:key="blog.id" v-for="blog in blogs.data">
+        <div class="card-body">
+          <h2 class="card-title">{{ blog.title }}</h2>
+          <small>
+            {{ blog.created_at }}
+            <img
+              :src="blog.author.image_url"
+              :alt="blog.author.username"
+              height="25"
+              width="25"
+              style="border-radius:50%;"
+            />
+            {{ blog.author.username }} ({{ blog.author.first_name }} {{ blog.author.last_name }})
+          </small>
+          <p class="card-text mt-2">{{ blog.text }}</p>
+          <hr />
+          <div class>
+            <button class="btn btn-link" @click="up_vote(blog.id)">
+              <img
+                v-if="blog.is_upvoted"
+                src="@/assets/claps.png"
+                alt="Claps"
+                height="30"
+                width="30"
+              />
+              <img
+                v-if="blog.is_upvoted===false"
+                src="@/assets/not_clap.png"
+                alt="Claps"
+                height="40"
+                width="40"
+              />
+            </button>
+            {{ blog.upvote_count }}
+          </div>
+        </div>
+      </div>
+      <div class="loading" v-if="blogs.data===[]">0 Results Found. Come back later..</div>
+      <div class="loading" v-if="loading===true">Hang on. We are Loading results...</div>
+      <div class="loading" v-else-if="load_error===true">
+        <strong>We are having trouble loading results at the moment. Make sure you are signed in...</strong>
+      </div>
+    </div>
+  </div>
 </template>
 
 
@@ -106,9 +140,7 @@ import navbar from "@/components/navbar.vue";
 
 export default {
   name: "ShareEverything",
-  components: {
-    
-  },
+  components: {},
   props: {
     isSignIn: Boolean
   },
@@ -123,10 +155,10 @@ export default {
       leaderboard: [],
       blog_by_id: [],
       token: "Token " + localStorage.getItem("jwt"),
-      newBlog: {'title': null, 'text': null}
+      newBlog: { title: null, text: null }
     };
   },
-  mounted: function(){
+  mounted: function() {
     this.get_all_blogs();
     this.get_leaderboard();
   },

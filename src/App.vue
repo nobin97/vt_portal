@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbar/>
-    <div id="nav">
+    <div id="nav" class="text-center">
       <router-link to="/">Home</router-link> |
       <router-link to="/share_everything">Share Everything</router-link> |
       <router-link to="/about">About</router-link>
@@ -40,6 +40,6 @@ export default {
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color:rgb(211, 3, 3);
 }
 </style>

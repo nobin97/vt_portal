@@ -1,12 +1,15 @@
 <template>
   <div class="signin">
-    <div class="row ml-2 mr-5 mt-2">
-      <div class="col-md-9">
-        <img src="https://www.google.com/a/cpanel/qburst.com/images/logo.gif?service=google_gsuite" alt="QBurst" height=55 width="140" style="border-radius:50%;">
+    <div class="row ml-2 mr-3 mt-2">
+      <div class="col-lg-9">
+        <a href="https://www.qburst.com/">
+          <img src="https://www.google.com/a/cpanel/qburst.com/images/logo.gif?service=google_gsuite" alt="QBurst" height=55 width="140">
+        </a>
       </div>
-      <div class="col" >
+      <div class="col-sm-3 text-center" >
         <button
         class="btn btn-danger"
+        style="float:right;"
         @click="handleClickSignIn"
         v-if="!isSignIn"
         :disabled="!isInit"
@@ -118,9 +121,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-/* .signin {
-  float: right;
-} */
-</style>
