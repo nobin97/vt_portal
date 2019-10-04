@@ -89,7 +89,7 @@
             <p class="card-text mt-2">{{ blog.text }}</p>
             <hr>
             <div class="">
-              <button class="btn btn-link" @click="up_vote(blog.id)"><img src="@/assets/claps.png" alt="Claps" height="30" width="30"></button>  {{ blog.upvote_count }}
+              <button class="btn btn-link" @click="up_vote(blog.id)"><img v-if="blog.is_upvoted" src="@/assets/claps.png" alt="Claps" height="30" width="30"><img v-if="blog.is_upvoted===false" src="@/assets/not_clap.png" alt="Claps" height="40" width="40"></button>  {{ blog.upvote_count }}
             </div>
           </div>
         </div>
@@ -108,6 +108,9 @@ export default {
   name: "ShareEverything",
   components: {
     
+  },
+  props: {
+    isSignIn: Boolean
   },
   data() {
     return {

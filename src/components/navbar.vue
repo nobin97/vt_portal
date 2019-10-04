@@ -1,21 +1,25 @@
 <template>
-  <div class="hello">
-    <div class="row mr-5 mt-2">
-      <button
+  <div class="signin">
+    <div class="row ml-2 mr-5 mt-2">
+      <div class="col-md-9">
+        <img src="https://www.google.com/a/cpanel/qburst.com/images/logo.gif?service=google_gsuite" alt="QBurst" height=55 width="140" style="border-radius:50%;">
+      </div>
+      <div class="col" >
+        <button
         class="btn btn-danger"
         @click="handleClickSignIn"
         v-if="!isSignIn"
         :disabled="!isInit"
-      >Sign In</button>
-      <div class="" v-if="isSignIn">
-        <strong>Hey, {{ username }}! </strong>&nbsp;
-        <img :src="image_url" :alt="username" height=40 width="40" style="border-radius:50%;">&nbsp;
-        <button
-          class="btn btn-success"
-          icon="fas fa-edit"
-          @click="handleClickSignOut"
-          :disabled="!isInit"
-        >Sign Out</button>
+        >Sign In</button>
+        <div class="" v-if="isSignIn">
+          <strong>Hey, {{ username }}! </strong>&nbsp;
+          <img :src="image_url" :alt="username" height=40 width="40" style="border-radius:50%;">&nbsp;
+          <button
+            class="btn btn-success"
+            @click="handleClickSignOut"
+            :disabled="!isInit"
+          >Sign Out</button>
+        </div>
       </div>
     </div>
   </div>
@@ -24,7 +28,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: "HelloWorld",
+  name: "navbar",
   props: {
     msg: String
   },
@@ -50,20 +54,16 @@ export default {
       this.$gAuth
         .getAuthCode()
         .then(authCode => {
-          //on success
           console.log("authCode", authCode);
         })
         .catch(error => {
-          //on fail do something
+          console.log(error);
         });
     },
     handleClickSignIn: function() {
       this.$gAuth
         .signIn()
         .then(GoogleUser => {
-          //on success do something
-          // console.log("GoogleUser", GoogleUser);
-          // console.log("getId", GoogleUser.getId());
           const profile = GoogleUser.getBasicProfile();
           this.data.id = profile.getId(); 
           this.data.full_name = profile.getName();
@@ -76,7 +76,7 @@ export default {
           this.sendToBackend();
         })
         .catch(error => {
-          //on fail do something
+          console.log(error);
         });
     },
     sendToBackend: function(){
@@ -85,8 +85,9 @@ export default {
         .then(response => {
           localStorage.setItem("jwt", response.body.data.token);
           localStorage.setItem("username", response.body.data.username);
+          this.username = response.body.data.username;
           localStorage.setItem("image_url", response.body.data.image_url);
-          console.log("reached backend", response.body.data.token);
+          this.image_url = response.body.data.image_url;
         })
         .catch(err => {
           console.log(err);
@@ -96,7 +97,6 @@ export default {
       this.$gAuth
         .signOut()
         .then(() => {
-          //on success do something
           this.isSignIn = this.$gAuth.isAuthorized;
           localStorage.removeItem("jwt");
           localStorage.removeItem("username");
@@ -104,15 +104,12 @@ export default {
           this.$router.push('/');
         })
         .catch(error => {
-          //on fail do something
+          console.log(error);
         });
     }
   },
   created() {
     let that = this;
-    // console.log("created");
-    // this.handleClickSignIn();
-    // console.log("ran signin")
     let checkGauthLoad = setInterval(function() {
       that.isInit = that.$gAuth.isInit;
       that.isSignIn = that.$gAuth.isAuthorized;
@@ -122,9 +119,8 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.hello {
+/* .signin {
   float: right;
-}
+} */
 </style>
