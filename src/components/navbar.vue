@@ -74,7 +74,8 @@ export default {
           this.data.last_name = profile.getFamilyName();
           this.data.image_url = profile.getImageUrl();
           this.data.email = profile.getEmail();
-          this.data.access_token = GoogleUser.getAuthResponse();
+          this.data.access_token = GoogleUser.getAuthResponse().access_token;
+          console.log("accesstoken", GoogleUser.getAuthResponse().access_token);
           this.isSignIn = this.$gAuth.isAuthorized;
           this.sendToBackend();
         })
@@ -91,6 +92,7 @@ export default {
           this.username = response.body.data.username;
           localStorage.setItem("image_url", response.body.data.image_url);
           this.image_url = response.body.data.image_url;
+          localStorage.setItem("signedIn", true)
         })
         .catch(err => {
           console.log(err);
@@ -104,6 +106,7 @@ export default {
           localStorage.removeItem("jwt");
           localStorage.removeItem("username");
           localStorage.removeItem("image_url");
+          localStorage.setItem("signedIn", false)
           this.$router.push('/');
         })
         .catch(error => {

@@ -125,10 +125,12 @@
           </div>
         </div>
       </div>
-      <div class="loading" v-if="blogs.data===[]">0 Results Found. Come back later..</div>
       <div class="loading" v-if="loading===true">Hang on. We are Loading results...</div>
       <div class="loading" v-else-if="load_error===true">
         <strong>We are having trouble loading results at the moment. Make sure you are signed in...</strong>
+      </div>
+      <div v-if="blogs.data">
+        <div class="loading" v-if="blogs.data.length===0"><strong> 0 Results Found. Come back later... </strong></div>
       </div>
     </div>
   </div>
@@ -137,6 +139,7 @@
 
 <script>
 import navbar from "@/components/navbar.vue";
+import { log } from 'util';
 
 export default {
   name: "ShareEverything",
@@ -146,6 +149,7 @@ export default {
   },
   data() {
     return {
+      signedIn: localStorage.getItem("signedIn"),
       page_title: "Share Everything",
       blog: [],
       blogs: [],
@@ -159,8 +163,15 @@ export default {
     };
   },
   mounted: function() {
-    this.get_all_blogs();
-    this.get_leaderboard();
+    if (this.signedIn === "true") {
+      this.get_all_blogs();
+      this.get_leaderboard();
+    }
+    else {
+      this.loading = false;
+      this.lboard_loading = false;
+      this.load_error = true;
+    }
   },
   methods: {
     get_all_blogs: function() {
