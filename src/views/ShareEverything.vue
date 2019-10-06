@@ -104,7 +104,7 @@
           </small>
           <p class="card-text mt-2">{{ blog.text }}</p>
           <hr />
-          <div class>
+          <div class="upvote_details">
             <button class="btn btn-link" @click="up_vote(blog.id)">
               <img
                 v-if="blog.is_upvoted"
@@ -121,7 +121,8 @@
                 width="40"
               />
             </button>
-            {{ blog.upvote_count }}
+            <strong> {{ blog.upvote_count }} </strong>
+            <span v-if="blog.upvote_count > 0"> | <small> Liked by </small> <span :key="upvoter.id" v-for="upvoter in blog.upvoted_by"><img :src="upvoter.image_url" alt="" height="18" width="18" style="border-radius:50%;"></span></span>
           </div>
         </div>
       </div>

@@ -64,6 +64,7 @@ export default {
         });
     },
     handleClickSignIn: function() {
+      console.log("handling signin");
       this.$gAuth
         .signIn()
         .then(GoogleUser => {
@@ -116,6 +117,9 @@ export default {
   },
   created() {
     let that = this;
+    console.log("created: signin")
+    that.handleClickSignIn();
+    console.log("created: signedin")
     let checkGauthLoad = setInterval(function() {
       that.isInit = that.$gAuth.isInit;
       that.isSignIn = that.$gAuth.isAuthorized;
