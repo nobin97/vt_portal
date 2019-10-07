@@ -89,6 +89,7 @@ export default {
         .post("http://localhost:8000/api/v1/accounts/login_check/", this.data)
         .then(response => {
           localStorage.setItem("jwt", response.body.data.token);
+          localStorage.setItem("vt_user_id", response.body.data.id);
           localStorage.setItem("username", response.body.data.username);
           this.username = response.body.data.username;
           localStorage.setItem("image_url", response.body.data.image_url);
@@ -107,6 +108,7 @@ export default {
           localStorage.removeItem("jwt");
           localStorage.removeItem("username");
           localStorage.removeItem("image_url");
+          localStorage.removeItem("vt_user_id");
           localStorage.setItem("signedIn", false)
           this.$router.push('/');
         })
