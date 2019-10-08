@@ -234,9 +234,10 @@
             <span v-if="blog.upvote_count > 0">
               |
               <small>Liked by</small>
-              <span :key="upvoter.id" v-for="upvoter in blog.upvoted_by">
-                <img :src="upvoter.image_url" alt height="18" width="18" style="border-radius:50%;" />
+              <span :key="upvoter.id" v-for="(upvoter, index) in blog.upvoted_by.reverse()">
+                <img v-if="index < 2" :src="upvoter.image_url" alt height="18" width="18" style="border-radius:50%;" />
               </span>
+              <span v-if="blog.upvote_count > 2"> and {{ blog.upvote_count-2 }} other(s)...</span>
             </span>
           </div>
         </div>
