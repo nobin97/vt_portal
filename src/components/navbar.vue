@@ -57,14 +57,12 @@ export default {
       this.$gAuth
         .getAuthCode()
         .then(authCode => {
-          console.log("authCode", authCode);
         })
         .catch(error => {
           console.log(error);
         });
     },
     handleClickSignIn: function() {
-      console.log("handling signin");
       this.$gAuth
         .signIn()
         .then(GoogleUser => {
@@ -76,7 +74,6 @@ export default {
           this.data.image_url = profile.getImageUrl();
           this.data.email = profile.getEmail();
           this.data.access_token = GoogleUser.getAuthResponse().access_token;
-          console.log("accesstoken", GoogleUser.getAuthResponse().access_token);
           this.isSignIn = this.$gAuth.isAuthorized;
           this.sendToBackend();
         })
@@ -119,9 +116,7 @@ export default {
   },
   created() {
     let that = this;
-    console.log("created: signin")
     that.handleClickSignIn();
-    console.log("created: signedin")
     let checkGauthLoad = setInterval(function() {
       that.isInit = that.$gAuth.isInit;
       that.isSignIn = that.$gAuth.isAuthorized;

@@ -325,7 +325,6 @@ export default {
         })
         .catch(err => {
           this.loading = false;
-          console.log("some error");
           console.log(err);
         });
     },
@@ -342,7 +341,6 @@ export default {
           }
         })
         .then(response => {
-          console.log(response.data, response.status);
           this.getAllBlogs();
           this.getLeaderboard();
           $("#postUpdateModal").modal("hide");
@@ -363,7 +361,6 @@ export default {
           }
         })
         .then(response => {
-          console.log(response.data, response.status);
           this.getAllBlogs();
           this.getLeaderboard();
           this.loading = false;
@@ -393,7 +390,6 @@ export default {
         });
     },
     getBlog: function(id) {
-      console.log(id);
       this.loading = true;
       this.$http
         .get("http://localhost:8000/api/v1/share/blogs/" + id + "/", {
@@ -408,7 +404,6 @@ export default {
         })
         .catch(err => {
           this.loading = false;
-          console.log("some error");
           console.log(err);
         });
     },
@@ -420,14 +415,12 @@ export default {
           }
         })
         .then(response => {
-          console.log(this.blog_by_id);
           this.loading = false;
           this.getAllBlogs();
           this.getLeaderboard();
         })
         .catch(err => {
           this.loading = false;
-          console.log("some error");
           console.log(err);
         });
     },
@@ -441,7 +434,6 @@ export default {
         })
         .then(response => {
           this.leaderboard = response.data;
-          // console.log(this.leaderboard)
           this.lboard_loading = false;
         })
         .catch(err => {
@@ -459,14 +451,10 @@ export default {
           }
         })
         .then(response => {
-          // this.leaderboard = response.data;
-          console.log(response.data);
           this.loading = false;
-          console.log("going to run");
           this.getAllBlogs();
           this.getLeaderboard();
           $("#postModal").modal("hide");
-          console.log("ran");
         })
         .catch(err => {
           this.loading = false;
