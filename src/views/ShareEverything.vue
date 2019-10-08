@@ -102,6 +102,30 @@
     </div>
     <!--Post View Modal ends here-->
 
+    <!--Upvoted By View Modal-->
+    <div id="upvotedByModal" class="modal fade" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Upvoted By:</h4>
+          </div>
+          <div class="modal-body">
+            <div :key="upvoter.id" v-for="(upvoter, index) in upvotedByList">
+              <p>
+                {{ index + 1 }})
+                <img :src="upvoter.image_url" height="35" width="35" style="border-radius:50%;" />
+                {{ upvoter.username }} ({{ upvoter.first_name }} {{ upvoter.last_name }})
+              </p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Upvoted By View Modal ends here-->
+
     <!--Post Delete Modal-->
     <div id="postDeleteModal" class="modal fade" role="dialog">
       <div class="modal-dialog modal-lg">
@@ -230,14 +254,26 @@
             <button class="btn btn-link" v-else disabled>
               <img src="@/assets/not_clap.png" alt="Claps" height="40" width="40" />
             </button>
+
             <strong>{{ blog.upvote_count }}</strong>
             <span v-if="blog.upvote_count > 0">
               |
-              <small>Liked by</small>
-              <span :key="upvoter.id" v-for="(upvoter, index) in blog.upvoted_by.reverse()">
-                <img v-if="index < 2" :src="upvoter.image_url" alt height="18" width="18" style="border-radius:50%;" />
-              </span>
-              <span v-if="blog.upvote_count > 2"> and {{ blog.upvote_count-2 }} other(s)...</span>
+              <a class="showupvoters" href="#" @click="showUpvotedBy(blog.upvoted_by)">
+                <small>Liked by</small>
+                <span :key="upvoter.id" v-for="(upvoter, index) in blog.upvoted_by">
+                  <img
+                    v-if="index < 2"
+                    :src="upvoter.image_url"
+                    alt
+                    height="18"
+                    width="18"
+                    style="border-radius:50%;"
+                  />
+                </span>
+                <span v-if="blog.upvote_count > 2">
+                  <small>and {{ blog.upvote_count-2 }} other(s)...</small>
+                </span>
+              </a>
             </span>
           </div>
         </div>
@@ -283,6 +319,7 @@ export default {
       lboard_loading: false,
       load_error: false,
       getBlogId: "",
+      upvotedByList: [],
       updateBlogData: {
         data: {
           id: "",
@@ -328,6 +365,10 @@ export default {
           this.loading = false;
           console.log(err);
         });
+    },
+    showUpvotedBy: function(upvoters) {
+      this.upvotedByList = upvoters;
+      $("#upvotedByModal").modal("show");
     },
     updateBlog: function(id) {
       var data = {
@@ -474,5 +515,9 @@ export default {
 }
 .edit_blog {
   text-align: right;
+}
+.showupvoters {
+  color: black;
+  text-decoration: none;
 }
 </style>
