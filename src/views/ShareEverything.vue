@@ -1,6 +1,5 @@
 <template>
   <div class="mainapp flexBox" id="main-app">
-
     <!--Post Modal-->
     <div id="postModal" class="modal fade" role="dialog">
       <div class="modal-dialog modal-lg">
@@ -96,7 +95,7 @@
             <article>{{ blog.data.text }}</article>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close </button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
@@ -115,7 +114,12 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-            <button @click="postDelete(getBlogId)" type="button" class="btn btn-secondary" data-dismiss="modal">Yes</button>
+            <button
+              @click="postDelete(getBlogId)"
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >Yes</button>
           </div>
         </div>
       </div>
@@ -164,7 +168,9 @@
                 />
                 &nbsp;{{ item.user.username }}
               </div>
-              <div class="col text-center"><b> {{ item.score }} </b></div>
+              <div class="col text-center">
+                <b>{{ item.score }}</b>
+              </div>
             </div>
           </div>
         </div>
@@ -180,13 +186,16 @@
           <div class="edit_blog" v-if="blog.author.id === vt_user_id">
             <button @click="openBlogUpdateModal(blog.id)" class="btn btn-outline-dark">Edit</button>
             &nbsp;
-            <button @click="setBlogIdAndDelete(blog.id)" class="btn btn-outline-danger">Delete</button>
+            <button
+              @click="setBlogIdAndDelete(blog.id)"
+              class="btn btn-outline-danger"
+            >Delete</button>
           </div>
           <a class="blog_title" href="#" @click="getBlog(blog.id)">
             <h2 class="card-title">{{ blog.title }}</h2>
           </a>
           <small>
-            {{ blog.created_at }}
+            {{ blog.created_at }} &nbsp;
             <img
               :src="blog.author.image_url"
               :alt="blog.author.username"
@@ -196,10 +205,13 @@
             />
             {{ blog.author.username }} ({{ blog.author.first_name }} {{ blog.author.last_name }})
           </small>
-          <!-- <p class="card-text mt-2">{{ blog.text }}</p> -->
-          <hr />
           <div class="upvote_details">
-            <button class="btn btn-link" @click="upVote(blog.id)">
+            <hr />
+            <button
+              v-if="blog.author.id != vt_user_id"
+              class="btn btn-link"
+              @click="upVote(blog.id)"
+            >
               <img
                 v-if="blog.is_upvoted"
                 src="@/assets/claps.png"
@@ -215,8 +227,17 @@
                 width="40"
               />
             </button>
-            <strong> {{ blog.upvote_count }} </strong>
-            <span v-if="blog.upvote_count > 0"> | <small> Liked by </small> <span :key="upvoter.id" v-for="upvoter in blog.upvoted_by"><img :src="upvoter.image_url" alt="" height="18" width="18" style="border-radius:50%;"></span></span>
+            <button class="btn btn-link" v-else disabled>
+              <img src="@/assets/not_clap.png" alt="Claps" height="40" width="40" />
+            </button>
+            <strong>{{ blog.upvote_count }}</strong>
+            <span v-if="blog.upvote_count > 0">
+              |
+              <small>Liked by</small>
+              <span :key="upvoter.id" v-for="upvoter in blog.upvoted_by">
+                <img :src="upvoter.image_url" alt height="18" width="18" style="border-radius:50%;" />
+              </span>
+            </span>
           </div>
         </div>
       </div>
@@ -225,18 +246,19 @@
         <strong>We are having trouble loading results at the moment. Make sure you are signed in...</strong>
       </div>
       <div v-if="blogs.data">
-        <div class="loading" v-if="blogs.data.length===0"><strong> 0 Results Found. Come back later or share a new Post... </strong></div>
+        <div class="loading" v-if="blogs.data.length===0">
+          <strong>0 Results Found. Come back later or share a new Post...</strong>
+        </div>
       </div>
     </div>
     <!--Blog Listing ends here-->
-
   </div>
 </template>
 
 
 <script>
 import navbar from "@/components/navbar.vue";
-import { log } from 'util';
+import { log } from "util";
 
 export default {
   name: "ShareEverything",
@@ -251,8 +273,8 @@ export default {
       page_title: "Share Everything",
       blog: {
         data: {
-          "title": "",
-          "text": ""
+          title: "",
+          text: ""
         }
       },
       blogs: [],
@@ -260,11 +282,11 @@ export default {
       lboard_loading: false,
       load_error: false,
       getBlogId: "",
-      updateBlogData:{
+      updateBlogData: {
         data: {
-          "id": "",
-          "title": "",
-          "text": ""
+          id: "",
+          title: "",
+          text: ""
         }
       },
       leaderboard: [],
@@ -276,8 +298,7 @@ export default {
     if (this.signedIn === "true") {
       this.getAllBlogs();
       this.getLeaderboard();
-    }
-    else {
+    } else {
       this.loading = false;
       this.lboard_loading = false;
       this.load_error = true;
@@ -287,9 +308,9 @@ export default {
     setBlogIdAndDelete: function(id) {
       this.getBlogId = id;
       $("#postDeleteModal").modal("show");
-      console.log(id, "set")
+      console.log(id, "set");
     },
-    openBlogUpdateModal: function(id){
+    openBlogUpdateModal: function(id) {
       this.loading = true;
       this.$http
         .get("http://localhost:8000/api/v1/share/blogs/" + id + "/", {
@@ -298,7 +319,7 @@ export default {
           }
         })
         .then(response => {
-          this.updateBlogData = response.data
+          this.updateBlogData = response.data;
           this.loading = false;
           $("#postUpdateModal").modal("show");
         })
@@ -308,11 +329,11 @@ export default {
           console.log(err);
         });
     },
-    updateBlog: function(id){
+    updateBlog: function(id) {
       var data = {
-        "title": this.updateBlogData.data.title, 
-        "text":this.updateBlogData.data.text
-        }
+        title: this.updateBlogData.data.title,
+        text: this.updateBlogData.data.text
+      };
       this.loading = true;
       this.$http
         .put("http://localhost:8000/api/v1/share/blogs/" + id + "/", data, {
@@ -381,7 +402,7 @@ export default {
           }
         })
         .then(response => {
-          this.blog = response.data
+          this.blog = response.data;
           this.loading = false;
           $("#postViewModal").modal("show");
         })
@@ -458,11 +479,11 @@ export default {
 </script>
 
 <style scoped>
-  .blog_title {
-    color: black;
-    text-decoration: none;
-  }
-  .edit_blog {
-    text-align: right;
-  }
+.blog_title {
+  color: black;
+  text-decoration: none;
+}
+.edit_blog {
+  text-align: right;
+}
 </style>
