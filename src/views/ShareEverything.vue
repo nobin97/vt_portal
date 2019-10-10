@@ -110,9 +110,8 @@
             <h4 class="modal-title">Upvoted By:</h4>
           </div>
           <div class="modal-body">
-            <div :key="upvoter.id" v-for="(upvoter, index) in upvotedByList">
+            <div :key="upvoter.id" v-for="upvoter in upvotedByList">
               <p>
-                {{ index + 1 }})
                 <img :src="upvoter.image_url" height="35" width="35" style="border-radius:50%;" />
                 {{ upvoter.username }} ({{ upvoter.first_name }} {{ upvoter.last_name }})
               </p>
@@ -215,9 +214,10 @@
               class="btn btn-outline-danger"
             >Delete</button>
           </div>
-          <a class="blog_title" href="#" @click="getBlog(blog.id)">
+          <router-link class="blog_title" :to="{ name: 'share_everything_read_blog', params: {id: blog.id} }">
             <h2 class="card-title">{{ blog.title }}</h2>
-          </a>
+          </router-link>
+          <router-view />
           <small>
             {{ blog.created_at }} &nbsp;
             <img
@@ -259,7 +259,7 @@
             <span v-if="blog.upvote_count > 0">
               |
               <a class="showupvoters" href="#" @click="showUpvotedBy(blog.upvoted_by)">
-                <small>Liked by</small>
+                <small>Upvoted by </small>
                 <span :key="upvoter.id" v-for="(upvoter, index) in blog.upvoted_by">
                   <img
                     v-if="index < 2"
