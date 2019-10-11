@@ -21,7 +21,7 @@
                 />
               </div>
               <div class="form-group">
-                <label for="blogText">Text</label>
+                <!-- <label for="blogText">Text</label>
                 <textarea
                   class="form-control"
                   id="blogText"
@@ -29,7 +29,8 @@
                   v-model="newBlog.text"
                   required="required"
                   rows="10"
-                ></textarea>
+                ></textarea> -->
+                <wysiwyg v-model="newBlog.text" />
               </div>
             </div>
             <div class="modal-footer">
@@ -68,7 +69,7 @@
                   class="form-control"
                   id="blogText"
                   placeholder="Enter Text"
-                  v-model="updateBlogData.data.text"
+                  v-html="compiledMarkdowna"
                   required="required"
                   rows="10"
                 ></textarea>
@@ -214,7 +215,7 @@
               class="btn btn-outline-danger"
             >Delete</button>
           </div>
-          <router-link class="blog_title" :to="{ name: 'share_everything_read_blog', params: {id: blog.id} }">
+          <router-link class="blog_title" :to="{ name: 'share_everything_read_blog', params: {id: blog.id}, props: true }">
             <h2 class="card-title">{{ blog.title }}</h2>
           </router-link>
           <router-view />
@@ -331,6 +332,11 @@ export default {
       token: "Token " + localStorage.getItem("jwt"),
       newBlog: { title: null, text: null }
     };
+  },
+  computed: {
+    compiledMarkdown: function() {
+      return marked(this.updateBlogData.data.text, { sanitize: true });
+    }
   },
   mounted: function() {
     if (this.signedIn === "true") {
