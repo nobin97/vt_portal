@@ -21,7 +21,7 @@
                 />
               </div>
               <div class="form-group">
-                <!-- <label for="blogText">Text</label>
+                <label for="blogText">Text</label>
                 <textarea
                   class="form-control"
                   id="blogText"
@@ -29,8 +29,8 @@
                   v-model="newBlog.text"
                   required="required"
                   rows="10"
-                ></textarea> -->
-                <wysiwyg v-model="newBlog.text" />
+                ></textarea>
+                <!-- <wysiwyg v-model="newBlog.text" /> -->
               </div>
             </div>
             <div class="modal-footer">
@@ -69,7 +69,7 @@
                   class="form-control"
                   id="blogText"
                   placeholder="Enter Text"
-                  v-html="compiledMarkdowna"
+                  v-model="updateBlogData.data.text"
                   required="required"
                   rows="10"
                 ></textarea>
@@ -84,24 +84,6 @@
       </div>
     </div>
     <!--Post Update Modal ends here-->
-
-    <!--Post View Modal-->
-    <div id="postViewModal" class="modal fade" role="dialog">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title text-center">{{ blog.data.title }}</h4>
-          </div>
-          <div class="modal-body">
-            <article>{{ blog.data.text }}</article>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--Post View Modal ends here-->
 
     <!--Upvoted By View Modal-->
     <div id="upvotedByModal" class="modal fade" role="dialog">
@@ -290,6 +272,10 @@
       </div>
     </div>
     <!--Blog Listing ends here-->
+
+    <!--Paginator starts here-->
+    
+    <!--Paginator ends here-->
   </div>
 </template>
 

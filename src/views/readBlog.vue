@@ -6,7 +6,7 @@
     <br />
     <br />
     <h1 v-html="blog.data.title" />
-    <article v-html="blog.data.text" />
+    <article v-html="compiledMarkdown" />
     <!-- ?{{ this.blog.data }} -->
   </div>
 </template>
@@ -38,7 +38,6 @@ export default {
   methods: {
     getBlog: function() {
       this.loading = true;
-      console.log("token", this.token);
       this.$http
         .get(
           "http://localhost:8000/api/v1/share/blogs/" +
