@@ -295,6 +295,7 @@ export default {
       signedIn: localStorage.getItem("signedIn"),
       vt_user_id: localStorage.getItem("vt_user_id"),
       page_title: "Share Everything",
+      BASE_URL:"http://api.internal-vt.qburst.build:8000/",
       blog: {
         data: {
           title: "",
@@ -343,7 +344,7 @@ export default {
     openBlogUpdateModal: function(id) {
       this.loading = true;
       this.$http
-        .get("http://localhost:8000/api/v1/share/blogs/" + id + "/", {
+        .get(this.BASE_URL + "api/v1/share/blogs/" + id + "/", {
           headers: {
             Authorization: this.token
           }
@@ -369,7 +370,7 @@ export default {
       };
       this.loading = true;
       this.$http
-        .put("http://localhost:8000/api/v1/share/blogs/" + id + "/", data, {
+        .put(this.BASE_URL + "api/v1/share/blogs/" + id + "/", data, {
           headers: {
             Authorization: this.token
           }
@@ -389,7 +390,7 @@ export default {
     postDelete: function(id) {
       this.loading = true;
       this.$http
-        .delete("http://localhost:8000/api/v1/share/blogs/" + id + "/", {
+        .delete(this.BASE_URL + "api/v1/share/blogs/" + id + "/", {
           headers: {
             Authorization: this.token
           }
@@ -408,7 +409,7 @@ export default {
     getAllBlogs: function() {
       this.loading = true;
       this.$http
-        .get("http://localhost:8000/api/v1/share/blogs/", {
+        .get(this.BASE_URL + "api/v1/share/blogs/", {
           headers: {
             Authorization: this.token
           }
@@ -426,7 +427,7 @@ export default {
     getBlog: function(id) {
       this.loading = true;
       this.$http
-        .get("http://localhost:8000/api/v1/share/blogs/" + id + "/", {
+        .get(this.BASE_URL + "api/v1/share/blogs/" + id + "/", {
           headers: {
             Authorization: this.token
           }
@@ -443,7 +444,7 @@ export default {
     },
     upVote: function(id) {
       this.$http
-        .get("http://localhost:8000/api/v1/share/blogs/" + id + "/upvote/", {
+        .get(this.BASE_URL + "api/v1/share/blogs/" + id + "/upvote/", {
           headers: {
             Authorization: this.token
           }
@@ -461,7 +462,7 @@ export default {
     getLeaderboard: function() {
       this.lboard_loading = true;
       this.$http
-        .get("http://localhost:8000/api/v1/share/blogs/leaderboard/", {
+        .get(this.BASE_URL + "api/v1/share/blogs/leaderboard/", {
           headers: {
             Authorization: this.token
           }
@@ -479,7 +480,7 @@ export default {
     postBlog: function() {
       this.loading = true;
       this.$http
-        .post("http://localhost:8000/api/v1/share/blogs/", this.newBlog, {
+        .post(this.BASE_URL + "api/v1/share/blogs/", this.newBlog, {
           headers: {
             Authorization: this.token
           }

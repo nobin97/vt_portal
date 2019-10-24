@@ -19,6 +19,7 @@ export default {
       signedIn: localStorage.getItem("signedIn"),
       vt_user_id: localStorage.getItem("vt_user_id"),
       loading: true,
+      BASE_URL:"http://api.internal-vt.qburst.build:8000/",
       blog: {
         data: {
           title: "",
@@ -40,7 +41,7 @@ export default {
       this.loading = true;
       this.$http
         .get(
-          "http://localhost:8000/api/v1/share/blogs/" +
+          this.BASE_URL + "api/v1/share/blogs/" +
             this.$route.params.id +
             "/",
           {

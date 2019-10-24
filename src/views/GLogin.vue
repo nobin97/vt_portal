@@ -8,6 +8,7 @@ export default {
   name: "GLogin",
   data() {
     return {
+      BASE_URL:"http://api.internal-vt.qburst.build:8000/",
       data: {
         id: "", 
         full_name: "",
@@ -39,9 +40,8 @@ export default {
     sendToBackend: function() {
       this.loading = true;
       this.$http
-        .post("http://localhost:8000/api/v1/accounts/login_check/", this.data)
+        .post(this.BASE_URL + "api/v1/accounts/login_check/", this.data)
         .then(response => {
-          console.log("reached backend", this.email);
         })
         .catch(err => {
           console.log(err);

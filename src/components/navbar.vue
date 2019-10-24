@@ -39,6 +39,7 @@ export default {
     return {
       isInit: false,
       isSignIn: false,
+      BASE_URL:"http://api.internal-vt.qburst.build:8000/",
       username: localStorage.getItem("username"),
       image_url: localStorage.getItem("image_url"),
       data: {
@@ -83,7 +84,7 @@ export default {
     },
     sendToBackend: function(){
       this.$http
-        .post("http://localhost:8000/api/v1/accounts/login_check/", this.data)
+        .post(this.BASE_URL + "api/v1/accounts/login_check/", this.data)
         .then(response => {
           localStorage.setItem("jwt", response.body.data.token);
           localStorage.setItem("vt_user_id", response.body.data.id);
