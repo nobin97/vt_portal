@@ -34,7 +34,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Post</button>
+              <button id="postBlogModal" type="submit" class="btn btn-primary">Post</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
           </form>
@@ -478,6 +478,7 @@ export default {
         });
     },
     postBlog: function() {
+      $("#postBlogModal").prop("disabled", true);
       this.loading = true;
       this.$http
         .post(this.BASE_URL + "api/v1/share/blogs/", this.newBlog, {
@@ -490,10 +491,12 @@ export default {
           this.getAllBlogs();
           this.getLeaderboard();
           $("#postModal").modal("hide");
+          $("#postBlogModal").prop("disabled", false);
         })
         .catch(err => {
           this.loading = false;
           this.load_error = true;
+          $("#postBlogModal").prop("disabled", false);
           console.log(err);
         });
     }
