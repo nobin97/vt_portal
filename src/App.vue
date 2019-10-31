@@ -2,9 +2,10 @@
   <div>
     <navbar/>
     <div id="nav" class="text-center">
-      <router-link to="/">Home</router-link> |
+      <!-- <router-link to="/">Home</router-link> |
       <router-link to="/share_everything">Share Everything</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">About</router-link> -->
+      <!-- <h1><strong>VT-PORTAL</strong></h1> -->
     </div>
     <div class="">
     <router-view />

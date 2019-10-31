@@ -39,8 +39,10 @@ export default {
     return {
       isInit: false,
       isSignIn: false,
+      BASE_URL:"http://127.0.0.1:8000/",
       username: localStorage.getItem("username"),
       image_url: localStorage.getItem("image_url"),
+      role: localStorage.getItem("role"),
       data: {
         id: "", 
         full_name: "",
@@ -48,6 +50,7 @@ export default {
         last_name: "",
         image_url: "",
         email: "",
+        role: "",
         access_token: "",
       } 
     };
@@ -57,14 +60,12 @@ export default {
       this.$gAuth
         .getAuthCode()
         .then(authCode => {
-          console.log("authCode", authCode);
         })
         .catch(error => {
           console.log(error);
         });
     },
     handleClickSignIn: function() {
-      console.log("handling signin");
       this.$gAuth
         .signIn()
         .then(GoogleUser => {
@@ -76,7 +77,6 @@ export default {
           this.data.image_url = profile.getImageUrl();
           this.data.email = profile.getEmail();
           this.data.access_token = GoogleUser.getAuthResponse().access_token;
-          console.log("accesstoken", GoogleUser.getAuthResponse().access_token);
           this.isSignIn = this.$gAuth.isAuthorized;
           this.sendToBackend();
         })
@@ -86,14 +86,26 @@ export default {
     },
     sendToBackend: function(){
       this.$http
-        .post("http://localhost:8000/api/v1/accounts/login_check/", this.data)
+        .post(this.BASE_URL + "api/v1/accounts/login_check/", this.data)
         .then(response => {
           localStorage.setItem("jwt", response.body.data.token);
+          localStorage.setItem("vt_user_id", response.body.data.id);
           localStorage.setItem("username", response.body.data.username);
           this.username = response.body.data.username;
           localStorage.setItem("image_url", response.body.data.image_url);
           this.image_url = response.body.data.image_url;
-          localStorage.setItem("signedIn", true)
+          localStorage.setItem("signedIn", true);
+          localStorage.setItem("role", response.body.data.role);
+          this.role = response.body.data.role;
+          if(this.role === 'director') {
+          this.$router.push('vt_list/');
+          }
+          else if(this.role !== null) {
+          this.$router.push('virtual_team/');
+          }
+          else {
+          this.$router.push('/');
+          }
         })
         .catch(err => {
           console.log(err);
@@ -107,7 +119,9 @@ export default {
           localStorage.removeItem("jwt");
           localStorage.removeItem("username");
           localStorage.removeItem("image_url");
-          localStorage.setItem("signedIn", false)
+          localStorage.removeItem("vt_user_id");
+          localStorage.removeItem("role");
+          localStorage.setItem("signedIn", false);
           this.$router.push('/');
         })
         .catch(error => {
@@ -117,9 +131,7 @@ export default {
   },
   created() {
     let that = this;
-    console.log("created: signin")
     that.handleClickSignIn();
-    console.log("created: signedin")
     let checkGauthLoad = setInterval(function() {
       that.isInit = that.$gAuth.isInit;
       that.isSignIn = that.$gAuth.isAuthorized;

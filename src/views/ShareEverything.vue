@@ -47,7 +47,7 @@
           <h1 class>Share Everything</h1>
         </div>
         <div class="col" v-if="load_error===false">
-          <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Share</button>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#postModal">Share</button>
         </div>
       </div>
     </div>
@@ -110,12 +110,12 @@
                 v-if="blog.is_upvoted"
                 src="@/assets/claps.png"
                 alt="Claps"
-                height="30"
+                height="30")
                 width="30"
               />
               <img
-                v-if="blog.is_upvoted===false"
-                src="@/assets/not_clap.png"
+                v-if="blog.)
+                src="@/asse)
                 alt="Claps"
                 height="40"
                 width="40"
