@@ -342,6 +342,14 @@ export default {
       console.log(id, "set");
     },
     openBlogUpdateModal: function(id) {
+      this.updateBlogData= {
+        data: {
+          id: "",
+          title: "",
+          text: ""
+        }
+      };
+      $("#postUpdateModal").modal("show");
       this.loading = true;
       this.$http
         .get(this.BASE_URL + "api/v1/share/blogs/" + id + "/", {
@@ -352,7 +360,6 @@ export default {
         .then(response => {
           this.updateBlogData = response.data;
           this.loading = false;
-          $("#postUpdateModal").modal("show");
         })
         .catch(err => {
           this.loading = false;
